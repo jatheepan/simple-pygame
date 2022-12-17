@@ -2,7 +2,8 @@ import pygame
 import sys
 from random import random
 from config import *
-from Block import *
+from Block import Block
+from Item import Item
 
 
 class Game:
@@ -12,11 +13,13 @@ class Game:
         pygame.init()
         self.font = pygame.font.SysFont(None, 26)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.mixer.music.load('assets/music.mp3')
         self.clock = pygame.time.Clock()
         self.block = Block(self.screen)
+        self.item = Item(self.screen)
+        self.item_group = pygame.sprite.Group()
+        self.item_group.add(self.item)
         pygame.key.set_repeat(1, 60)
-        # self.group = pygame.sprite.Group()
-        # self.group.add(block)
 
     def run(self):
         while True:
@@ -27,6 +30,7 @@ class Game:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not self.started:
                     self.started = True
+                    # pygame.mixer.music.play(-1)
 
                 if not self.started:
                     continue
@@ -37,6 +41,10 @@ class Game:
             self.screen.fill("black")
             self.block.draw()
             self.draw_welcome_message()
+            if self.started:
+                self.item_group.draw(self.screen)
+                self.item_group.update(self.block.rect)
+
             pygame.display.update()
             self.clock.tick(FPS)
 
