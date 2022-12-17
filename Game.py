@@ -11,15 +11,14 @@ class Game:
 
     def __init__(self):
         pygame.init()
+        pygame.key.set_repeat(1, 60)
         self.font = pygame.font.SysFont(None, 26)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.mixer.music.load('assets/music.mp3')
         self.clock = pygame.time.Clock()
         self.block = Block(self.screen)
-        self.item = Item(self.screen)
         self.item_group = pygame.sprite.Group()
-        self.item_group.add(self.item)
-        pygame.key.set_repeat(1, 60)
+        self.create_item()
 
     def run(self):
         while True:
@@ -38,15 +37,23 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     self.listen_keyboard_events(event)
 
+                if event.type == EVENT_ITEM_COLLECTED:
+                    print("done!!!")
+                    self.create_item()
+
             self.screen.fill("black")
             self.block.draw()
             self.draw_welcome_message()
             if self.started:
                 self.item_group.draw(self.screen)
-                self.item_group.update(self.block.rect)
+                self.item_group.update(self.block)
 
             pygame.display.update()
             self.clock.tick(FPS)
+
+    def create_item(self):
+        item = Item(self.screen)
+        self.item_group.add(item)
 
     def listen_keyboard_events(self, event) -> None:
         if event.key == pygame.K_LEFT:

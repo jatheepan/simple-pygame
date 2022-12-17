@@ -14,7 +14,6 @@ class Block(pygame.sprite.Sprite):
 
     def __init__(self, screen) -> None:
         super().__init__()
-        # picture = get_block_images('down')
         self.image = self.up_img
         self.rect = self.image.get_rect()
         self.left = (WIDTH - self.image.get_width()) / 2
@@ -23,7 +22,6 @@ class Block(pygame.sprite.Sprite):
         self.max_top = HEIGHT - self.image.get_height()
         self.rect.topleft = (self.left, self.top)
         self.screen = screen
-        pygame.display.flip()
 
     def draw(self):
         self.rect.topleft = (self.left, self.top)
