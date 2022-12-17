@@ -7,11 +7,15 @@ class Block(pygame.sprite.Sprite):
     left = 0
     max_top = 0
     max_left = 0
+    up_img = pygame.image.load(get_block_images('up'))
+    down_img = pygame.image.load(get_block_images('down'))
+    left_img = pygame.image.load(get_block_images('left'))
+    right_img = pygame.image.load(get_block_images('right'))
 
     def __init__(self, screen) -> None:
         super().__init__()
-        picture = get_block_images('down')
-        self.image = pygame.image.load(picture)
+        # picture = get_block_images('down')
+        self.image = self.up_img
         self.rect = self.image.get_rect()
         self.left = (WIDTH - self.image.get_width()) / 2
         self.top = (HEIGHT - self.image.get_height()) / 2
@@ -27,15 +31,18 @@ class Block(pygame.sprite.Sprite):
 
     def move(self, direction: str) -> None:
         picture = get_block_images(direction)
-        self.image = pygame.image.load(picture)
 
         if direction == 'up':
+            self.image = self.up_img
             self.top -= 10
         if direction == 'down':
+            self.image = self.down_img
             self.top += 10
         if direction == 'left':
+            self.image = self.left_img
             self.left -= 10
         if direction == 'right':
+            self.image = self.right_img
             self.left += 10
         if self.left < 0:
             self.left = 0

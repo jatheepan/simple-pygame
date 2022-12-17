@@ -10,7 +10,7 @@ class Game:
 
     def __init__(self):
         pygame.init()
-        self.font = pygame.font.SysFont(None, 40)
+        self.font = pygame.font.SysFont(None, 26)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
         self.block = Block(self.screen)
@@ -53,8 +53,13 @@ class Game:
     def draw_welcome_message(self) -> None:
         if self.started:
             return
-        img = self.font.render("Press Spacebar", True, WHITE)
-        self.screen.blit(img, (0, 0))
+        img = self.font.render("Press Spacebar to start".upper(), True, WHITE)
+        top = HEIGHT / 2
+        left = (WIDTH - img.get_width()) / 2
+        offset = self.block.image.get_height() / 2
+        top += offset
+        self.screen.blit(img, (left, top))
+
 
 if __name__ == "__main__":
     game = Game()
