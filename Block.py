@@ -7,6 +7,7 @@ class Block(pygame.sprite.Sprite):
     left = 0
     max_top = 0
     max_left = 0
+
     def __init__(self, screen) -> None:
         super().__init__()
         picture = get_block_images('down')
