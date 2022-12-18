@@ -34,7 +34,7 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not self.started:
                     self.started = True
                     self.spawn_item()
-                    # pygame.mixer.music.play(-1)
+                    pygame.mixer.music.play(-1)
 
                 if not self.started:
                     continue
@@ -134,6 +134,7 @@ class Game:
         self.enemy_group.empty()
         self.started = False
         self.block.reset_position()
+        pygame.mixer.music.fadeout(1300)
 
 
 if __name__ == "__main__":
