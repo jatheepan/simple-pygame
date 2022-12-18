@@ -26,9 +26,6 @@ class Item(pygame.sprite.Sprite):
         self.rect.topleft = (self.left, self.top)
         self.screen = screen
 
-    def draw(self):
-        self.screen.blit(self.image, self.rect)
-
     def update(self, block_rect: Block) -> None:
         is_collide = self.rect.colliderect(block_rect.rect)
         if is_collide:

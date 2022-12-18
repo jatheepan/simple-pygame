@@ -1,6 +1,6 @@
 import pygame
 
-WIDTH = 1280 / 4
+WIDTH = 1280 / 2
 HEIGHT = 720 / 2
 FPS = 60
 
@@ -8,6 +8,7 @@ WHITE = (255, 255, 255)
 COLLECT_CHANNEL_INDEX = 0
 
 EVENT_ITEM_COLLECTED = pygame.USEREVENT + 1
+EVENT_ENEMY_TOUCHED = pygame.USEREVENT + 2
 global sound_index
 sound_index = -1
 sound_collection = [
@@ -18,6 +19,13 @@ sound_collection = [
     'assets/collect4.wav',
     'assets/collect5.wav',
     'assets/collect6.wav',
+]
+
+enemy_collection = [
+    'assets/enemyblue.png',
+    'assets/enemygreen.png',
+    'assets/enemyorange.png',
+    'assets/enemyyellow.png',
 ]
 
 

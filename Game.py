@@ -1,15 +1,17 @@
 import pygame
 import sys
 from random import random
-from math import ceil
 from config import *
 from Block import Block
 from Item import Item
+from Enemy import Enemy
+from datetime import datetime, timedelta
 
 
 class Game:
     started = False
     score = 0
+    last_spawn_at: datetime = None
 
     def __init__(self):
         pygame.init()
@@ -20,6 +22,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.block = Block(self.screen)
         self.item_group = pygame.sprite.Group()
+        self.enemy_group = pygame.sprite.Group()
         self.create_item()
 
     def run(self):
@@ -40,7 +43,6 @@ class Game:
                     self.listen_keyboard_events(event)
 
                 if event.type == EVENT_ITEM_COLLECTED:
-                    print("done!!!")
                     self.score += 1
                     self.create_item()
 
@@ -52,6 +54,9 @@ class Game:
             if self.started:
                 self.item_group.draw(self.screen)
                 self.item_group.update(self.block)
+                self.enemy_group.draw(self.screen)
+                self.enemy_group.update(self.block)
+                self.spawn_enemy()
 
             pygame.display.update()
             self.clock.tick(FPS)
@@ -59,6 +64,23 @@ class Game:
     def create_item(self):
         item = Item(self.screen)
         self.item_group.add(item)
+
+    def spawn_enemy(self):
+        now = datetime.now()
+        if not self.last_spawn_at:
+            self.last_spawn_at = now - timedelta(0, 2)
+
+        delta_in_millis = (now - self.last_spawn_at).total_seconds() * 1000
+
+        per = 1.0 - ((self.get_level() - 1) * 0.2)
+        wait_duration = 2000 * per
+        print(wait_duration)
+        if delta_in_millis < wait_duration:
+            return
+
+        enemy = Enemy(self.screen)
+        self.enemy_group.add(enemy)
+        self.last_spawn_at = now
 
     def listen_keyboard_events(self, event) -> None:
         if event.key == pygame.K_LEFT:
