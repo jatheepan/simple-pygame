@@ -8,11 +8,13 @@ from Item import Item
 
 class Game:
     started = False
+    score = 0
+    level = 1
 
     def __init__(self):
         pygame.init()
-        pygame.key.set_repeat(1, 60)
-        self.font = pygame.font.SysFont(None, 26)
+        pygame.key.set_repeat(1, 40)
+        self.font = pygame.font.SysFont(None, 23)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.mixer.music.load('assets/music.mp3')
         self.clock = pygame.time.Clock()
@@ -39,11 +41,13 @@ class Game:
 
                 if event.type == EVENT_ITEM_COLLECTED:
                     print("done!!!")
+                    self.score += 1
                     self.create_item()
 
             self.screen.fill("black")
             self.block.draw()
             self.draw_welcome_message()
+            self.draw_score()
             if self.started:
                 self.item_group.draw(self.screen)
                 self.item_group.update(self.block)
@@ -73,6 +77,16 @@ class Game:
         left = (WIDTH - img.get_width()) / 2
         offset = self.block.image.get_height() / 2
         top += offset
+        self.screen.blit(img, (left, top))
+
+    def draw_score(self) -> None:
+        if not self.started:
+            return
+        score = f"Score: {self.score}"
+        img = self.font.render(score, True, WHITE)
+        margin = 2
+        top = 0 + margin
+        left = WIDTH - img.get_width() - margin
         self.screen.blit(img, (left, top))
 
 
