@@ -6,10 +6,10 @@ FPS = 60
 
 WHITE = (255, 255, 255)
 COLLECT_CHANNEL_INDEX = 0
+LOSE_CHANNEL_INDEX = 1
 
 EVENT_ITEM_COLLECTED = pygame.USEREVENT + 1
 EVENT_ENEMY_TOUCHED = pygame.USEREVENT + 2
-global sound_index
 sound_index = -1
 sound_collection = [
     'assets/collect.wav',

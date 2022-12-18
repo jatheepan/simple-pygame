@@ -5,8 +5,8 @@ from config import *
 
 
 def play_sound() -> None:
-    sound = pygame.mixer.Sound(get_next_collect_sound())
-    pygame.mixer.Channel(COLLECT_CHANNEL_INDEX).play(sound)
+    sound = pygame.mixer.Sound('assets/lose.wav')
+    pygame.mixer.Channel(LOSE_CHANNEL_INDEX).play(sound)
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -40,5 +40,6 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.topleft = (self.left, self.top)
         is_collide = self.rect.colliderect(block_rect.rect)
         if is_collide:
+            play_sound()
             pygame.event.post(pygame.event.Event(EVENT_ENEMY_TOUCHED))
 

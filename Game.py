@@ -23,7 +23,6 @@ class Game:
         self.block = Block(self.screen)
         self.item_group = pygame.sprite.Group()
         self.enemy_group = pygame.sprite.Group()
-        self.create_item()
 
     def run(self):
         while True:
@@ -34,6 +33,7 @@ class Game:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not self.started:
                     self.started = True
+                    self.spawn_item()
                     # pygame.mixer.music.play(-1)
 
                 if not self.started:
@@ -44,7 +44,10 @@ class Game:
 
                 if event.type == EVENT_ITEM_COLLECTED:
                     self.score += 1
-                    self.create_item()
+                    self.spawn_item()
+
+                if event.type == EVENT_ENEMY_TOUCHED:
+                    self.reset()
 
             self.screen.fill("black")
             self.block.draw()
@@ -61,7 +64,7 @@ class Game:
             pygame.display.update()
             self.clock.tick(FPS)
 
-    def create_item(self):
+    def spawn_item(self):
         item = Item(self.screen)
         self.item_group.add(item)
 
@@ -124,6 +127,13 @@ class Game:
 
     def get_level(self):
         return int(self.score / 5) + 1
+
+    def reset(self):
+        self.score = 0
+        self.item_group.empty()
+        self.enemy_group.empty()
+        self.started = False
+        self.block.reset_position()
 
 
 if __name__ == "__main__":

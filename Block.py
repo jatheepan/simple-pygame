@@ -16,12 +16,15 @@ class Block(pygame.sprite.Sprite):
         super().__init__()
         self.image = self.up_img
         self.rect = self.image.get_rect()
-        self.left = (WIDTH - self.image.get_width()) / 2
-        self.top = (HEIGHT - self.image.get_height()) / 2
         self.max_left = WIDTH - self.image.get_width()
         self.max_top = HEIGHT - self.image.get_height()
-        self.rect.topleft = (self.left, self.top)
+        self.reset_position()
         self.screen = screen
+
+    def reset_position(self):
+        self.left = (WIDTH - self.image.get_width()) / 2
+        self.top = (HEIGHT - self.image.get_height()) / 2
+        self.rect.topleft = (self.left, self.top)
 
     def draw(self):
         self.rect.topleft = (self.left, self.top)
