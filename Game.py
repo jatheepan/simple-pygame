@@ -1,6 +1,7 @@
 import pygame
 import sys
 from random import random
+from math import ceil
 from config import *
 from Block import Block
 from Item import Item
@@ -9,7 +10,6 @@ from Item import Item
 class Game:
     started = False
     score = 0
-    level = 1
 
     def __init__(self):
         pygame.init()
@@ -48,6 +48,7 @@ class Game:
             self.block.draw()
             self.draw_welcome_message()
             self.draw_score()
+            self.draw_level()
             if self.started:
                 self.item_group.draw(self.screen)
                 self.item_group.update(self.block)
@@ -88,6 +89,19 @@ class Game:
         top = 0 + margin
         left = WIDTH - img.get_width() - margin
         self.screen.blit(img, (left, top))
+
+    def draw_level(self) -> None:
+        if not self.started:
+            return
+        score = f"Level: {self.get_level()}"
+        img = self.font.render(score, True, WHITE)
+        margin = 2
+        top = 0 + margin
+        left = 0 + margin
+        self.screen.blit(img, (left, top))
+
+    def get_level(self):
+        return int(self.score / 5) + 1
 
 
 if __name__ == "__main__":
